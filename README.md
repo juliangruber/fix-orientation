@@ -42,6 +42,16 @@ npm install fix-orientation
 Then bundle for the browser with
 [browserify](https://github.com/substack/node-browserify).
 
+## Example
+
+Type
+
+```bash
+npm start
+```
+
+to get a local server running, so you can test this with your images.
+
 ## License
 
 (MIT)
