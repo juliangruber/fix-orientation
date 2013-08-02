@@ -1,0 +1,33 @@
+{
+  "name": "fix-orientation",
+  "description": "Rotate images if their exif data says so.",
+  "version": "0.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Wayla/fix-orientation.git"
+  },
+  "homepage": "https://github.com/Wayla/fix-orientation",
+  "main": "index.js",
+  "scripts": {
+    "start": "node example/server.js"
+  },
+  "dependencies": {
+    "png-size": "~0.1.0",
+    "jpeg-size": "0.0.1",
+    "data-uri-to-u8": "~1.0.0",
+    "exif-component": "0.0.2",
+    "rotate-component": "~1.0.0"
+  },
+  "devDependencies": {
+    "ecstatic": "~0.4.5"
+  },
+  "keywords": [
+    "orientation", "exif", "data-url", "canvas", "data-uri"
+  ],
+  "author": {
+    "name": "Julian Gruber",
+    "email": "julian@wayla.com",
+    "url": "http://wayla.com"
+  },
+  "license": "MIT"
+}
