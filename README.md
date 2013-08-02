@@ -44,7 +44,7 @@ Then bundle for the browser with
 
 ## Example
 
-Type
+Run
 
 ```bash
 npm start
