@@ -29,7 +29,7 @@ fixOrientation(url, { image: true }, function (fixed, image) {
 
 Call `fn` with the orientation fixed version of `dataUrl`. If `opts.image` is
 `true`, `fn` will get an `Image` object of the fixed data url as a second
-argument.
+argument. `dataUrl`'s file format will be preserved.
 
 ## Installation
 
