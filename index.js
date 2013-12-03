@@ -57,7 +57,9 @@ function fixOrientation (url, opts, fn) {
       height: s.width
     });
 
-    var url = canvas.toDataURL();
+    var url = buf.type == 'image/png'
+      ? canvas.toDataURL()
+      : canvas.toDataURL('image/jpeg', 1);
     fn(url, opts.image && urlToImage(url));
   });
 }
