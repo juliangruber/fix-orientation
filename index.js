@@ -49,7 +49,6 @@ function fixOrientation (url, opts, fn) {
     rotate(ctx, { x: half, y: half, degrees: -1 * dir * 90 });
 
     resize(canvas, {
-      max: max,
       width: s.height,
       height: s.width
     });
