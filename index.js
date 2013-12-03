@@ -45,9 +45,13 @@ function fixOrientation (url, opts, fn) {
   rotate(ctx, { x: half, y: half, degrees: dir * 90 });
 
   urlToImage(url, function (img) {
-    ctx.drawImage(img, 0, max / 4);
-    rotate(ctx, { x: half, y: half, degrees: -1 * dir * 90 });
+    if (dir == 1) {
+      ctx.drawImage(img, 0, max - s.height);
+    } else {
+      ctx.drawImage(img, max - s.width, 0);
+    }
 
+    rotate(ctx, { x: half, y: half, degrees: -1 * dir * 90 });
     resize(canvas, {
       width: s.height,
       height: s.width
