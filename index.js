@@ -23,7 +23,8 @@ function fixOrientation (url, opts, fn) {
 
   var toRotate = tags.Orientation
     && typeof tags.Orientation.value == 'number'
-    && tags.Orientation.value == 6;
+    && (tags.Orientation.value == 6
+    || tags.Orientation.value == 8);
 
   if (!toRotate) {
     process.nextTick(function () {
@@ -35,16 +36,17 @@ function fixOrientation (url, opts, fn) {
   var s = size[buf.type](buf);
   var max = Math.max(s.width, s.height);
   var half = max / 2;
+  var dir = { 6: 1, 8: -1 }[tags.Orientation.value];
 
   var canvas = document.createElement('canvas');
   var ctx = canvas.getContext('2d');
   canvas.width = canvas.height = max;
 
-  rotate(ctx, { x: half, y: half, degrees: 90 });
+  rotate(ctx, { x: half, y: half, degrees: dir * 90 });
 
   urlToImage(url, function (img) {
     ctx.drawImage(img, 0, max / 4);
-    rotate(ctx, { x: half, y: half, degrees: -90 });
+    rotate(ctx, { x: half, y: half, degrees: -1 * dir * 90 });
 
     resize(canvas, {
       max: max,
