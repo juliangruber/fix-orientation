@@ -15,11 +15,11 @@
     "png-size": "~0.1.0",
     "jpeg-size": "0.0.1",
     "data-uri-to-u8": "~1.0.0",
-    "exif-component": "0.0.2",
+    "exif-component": "1.0.1",
     "rotate-component": "~1.0.0"
   },
   "devDependencies": {
-    "ecstatic": "~0.4.5"
+    "ecstatic": "~2.1.0"
   },
   "keywords": [
     "orientation", "exif", "data-url", "canvas", "data-uri"
