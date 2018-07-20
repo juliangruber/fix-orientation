@@ -1,5 +1,5 @@
 var process = require('process');
-var exif = require('exif-component');
+var EXIF = require('exif-js');
 var toArray = require('data-uri-to-u8');
 var rotate = require('rotate-component');
 var resize = require('./lib/resize');
@@ -19,12 +19,13 @@ function fixOrientation (url, opts, fn) {
 
   var buf = toArray(url);
   var tags = {};
-  try { tags = exif(buf.buffer) } catch (err) {}
+  
+  try { tags = EXIF.readFromBinaryFile(buf.buffer) } catch (err) {}
 
   var toRotate = tags.Orientation
-    && typeof tags.Orientation.value == 'number'
-    && (tags.Orientation.value == 6
-    || tags.Orientation.value == 8);
+    && typeof tags.Orientation == 'number'
+    && (tags.Orientation == 6
+    || tags.Orientation == 8);
 
   if (!toRotate) {
     process.nextTick(function () {
@@ -36,7 +37,7 @@ function fixOrientation (url, opts, fn) {
   var s = size[buf.type](buf);
   var max = Math.max(s.width, s.height);
   var half = max / 2;
-  var dir = { 6: 1, 8: -1 }[tags.Orientation.value];
+  var dir = { 6: 1, 8: -1 }[tags.Orientation];
 
   var canvas = document.createElement('canvas');
   var ctx = canvas.getContext('2d');
