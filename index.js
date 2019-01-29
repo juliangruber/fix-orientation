@@ -47,7 +47,6 @@ function fixOrientation (url, opts, fn) {
   rotate(ctx, { x: half, y: half, degrees: rotateDegree });
 
   urlToImage(url, function (img) {
-    console.log(s.width, s.height);
     if (6 == tags.Orientation || (tags.Orientation == 3 && s.height < s.width)) {
       ctx.drawImage(img, 0, max - s.height);
     } else {
