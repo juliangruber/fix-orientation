@@ -22,11 +22,11 @@ function fixOrientation (url, opts, fn) {
   
   try { tags = EXIF.readFromBinaryFile(buf.buffer) } catch (err) {}
 
-  var supportedOrientation = [3,6,8];
+  var supportedOrientations = [3,6,8];
 
   var toRotate = tags.Orientation;
     && typeof tags.Orientation == 'number'
-    && supportedOrientation.includes(tags.Orientation);
+    && supportedOrientations.includes(tags.Orientation);
 
   if (!toRotate) {
     process.nextTick(function () {
@@ -38,13 +38,13 @@ function fixOrientation (url, opts, fn) {
   var s = size[buf.type](buf);
   var max = Math.max(s.width, s.height);
   var half = max / 2;
-  var rotateDegree = { 3: 180, 6: 90, 8: -90 }[tags.Orientation];
+  var rotateDegrees = { 3: 180, 6: 90, 8: -90 }[tags.Orientation];
 
   var canvas = document.createElement('canvas');
   var ctx = canvas.getContext('2d');
   canvas.width = canvas.height = max;
 
-  rotate(ctx, { x: half, y: half, degrees: rotateDegree });
+  rotate(ctx, { x: half, y: half, degrees: rotateDegrees });
 
   urlToImage(url, function (img) {
     if (6 == tags.Orientation || (tags.Orientation == 3 && s.height < s.width)) {
@@ -53,7 +53,7 @@ function fixOrientation (url, opts, fn) {
       ctx.drawImage(img, max - s.width, 0);
     }
 
-    rotate(ctx, { x: half, y: half, degrees: -rotateDegree });
+    rotate(ctx, { x: half, y: half, degrees: -rotateDegrees });
 
     if(tags.Orientation == 3){
       resize(canvas, {
