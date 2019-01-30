@@ -24,9 +24,9 @@ function fixOrientation (url, opts, fn) {
 
   var supportedOrientation = [3,6,8];
 
-  var toRotate = tags.Orientation
-              && typeof tags.Orientation == 'number'
-              && supportedOrientation.includes(tags.Orientation);
+  var toRotate = tags.Orientation;
+    && typeof tags.Orientation == 'number'
+    && supportedOrientation.includes(tags.Orientation);
 
   if (!toRotate) {
     process.nextTick(function () {
