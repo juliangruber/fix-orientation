@@ -24,7 +24,7 @@ function fixOrientation (url, opts, fn) {
 
   var supportedOrientations = [3,6,8];
 
-  var toRotate = tags.Orientation;
+  var toRotate = tags.Orientation
     && typeof tags.Orientation == 'number'
     && supportedOrientations.includes(tags.Orientation);
 
