@@ -19,7 +19,7 @@
     "rotate-component": "~1.0.0"
   },
   "devDependencies": {
-    "ecstatic": "~0.4.5"
+    "ecstatic": "~2.2.2"
   },
   "keywords": [
     "orientation",
