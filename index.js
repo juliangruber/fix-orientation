@@ -22,10 +22,11 @@ function fixOrientation (url, opts, fn) {
   
   try { tags = EXIF.readFromBinaryFile(buf.buffer) } catch (err) {}
 
+  var supportedOrientations = [3,6,8];
+
   var toRotate = tags.Orientation
     && typeof tags.Orientation == 'number'
-    && (tags.Orientation == 6
-    || tags.Orientation == 8);
+    && supportedOrientations.includes(tags.Orientation);
 
   if (!toRotate) {
     process.nextTick(function () {
@@ -37,26 +38,35 @@ function fixOrientation (url, opts, fn) {
   var s = size[buf.type](buf);
   var max = Math.max(s.width, s.height);
   var half = max / 2;
-  var dir = { 6: 1, 8: -1 }[tags.Orientation];
+  var rotateDegrees = { 3: 180, 6: 90, 8: -90 }[tags.Orientation];
 
   var canvas = document.createElement('canvas');
   var ctx = canvas.getContext('2d');
   canvas.width = canvas.height = max;
 
-  rotate(ctx, { x: half, y: half, degrees: dir * 90 });
+  rotate(ctx, { x: half, y: half, degrees: rotateDegrees });
 
   urlToImage(url, function (img) {
-    if (dir == 1) {
+    if (6 == tags.Orientation || (tags.Orientation == 3 && s.height < s.width)) {
       ctx.drawImage(img, 0, max - s.height);
     } else {
       ctx.drawImage(img, max - s.width, 0);
     }
 
-    rotate(ctx, { x: half, y: half, degrees: -1 * dir * 90 });
-    resize(canvas, {
-      width: s.height,
-      height: s.width
-    });
+    rotate(ctx, { x: half, y: half, degrees: -rotateDegrees });
+
+    if(tags.Orientation == 3){
+      resize(canvas, {
+        width: s.width,
+        height: s.height
+      });
+    }
+    else{
+      resize(canvas, {
+        width: s.height,
+        height: s.width
+      });
+    }
 
     var url = buf.type == 'image/png'
       ? canvas.toDataURL()
